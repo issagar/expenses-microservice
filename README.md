@@ -1,7 +1,10 @@
 # expenses-microservice
 install docker desktop
+
 run: docker compose up -d
+
 run services in order:
+
 1. Registry-service: it´s Eureka service in order to be recognize services among themselves
 2. api-gateway: it´s gateway service with security to call the rest of the services
 3. user-service: collect info user. This service is a kafka producer to send msg to wallet-service
