@@ -10,5 +10,6 @@ import java.util.List;
 public interface ExpensesRepository extends MongoRepository<Expense, Long> {
     List<Expense> findByUserId(String userId);
     List<Expense> findByCategory(String category);
+    //double sumAmountByUserId(String userId);
 
 }
