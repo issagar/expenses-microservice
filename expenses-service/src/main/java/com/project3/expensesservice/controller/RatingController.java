@@ -35,5 +35,10 @@ public class RatingController {
     public ResponseEntity<List<Expense>> listExpensesByCategory(@PathVariable String category){
         return ResponseEntity.ok(expensesService.getExpensesByCategory(category));
     }
+    /*
+    @GetMapping("/wallet/{userId}")
+    public ResponseEntity <Double> getCurrentBalanceByUserId(@PathVariable String userId){
+        return ResponseEntity.ok(expensesService.getCurrentBalanceByUserId(userId));
+    }*/
 
 }
