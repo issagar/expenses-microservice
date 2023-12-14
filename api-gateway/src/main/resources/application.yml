@@ -1,0 +1,41 @@
+server:
+  port: 8084
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/spring-boot-microservices-realm
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: EXPENSES-SERVICE
+          uri: lb://EXPENSES-SERVICE
+          predicates:
+            - Path=/expenses/**
+
+        - id: USERS-SERVICE
+          uri: lb://USERS-SERVICE
+          predicates:
+            - Path=/users/**
+
+        - id: CONTROL-WALLET-SERVICE
+          uri: lb://CONTROL-WALLET-SERVICE
+          predicates:
+            - Path=/api/wallet/**
+
+logging:
+  level:
+    org:
+      springframework:cloud:gateway:route:RouteDefinitionLocator: INFO
+    root: INFO
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
