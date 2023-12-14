@@ -3,6 +3,9 @@ install docker desktop
 
 run: docker compose up -d
 
+The API calls are protected with Keycloak. You should create a real called **spring-boot-microservices-realm** and a new cliet called **spring-cloud-client**.
+You should to introduce this data in postman to geneate a new token.
+
 run services in order:
 
 1. Registry-service: it´s Eureka service in order to be recognize services among themselves
