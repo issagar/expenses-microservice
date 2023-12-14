@@ -1,0 +1,30 @@
+server:
+  port: 8083
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: wallet
+  application:
+    name: CONTROL-WALLET-SERVICE
+kafka:
+  bootstrap-servers: localhost:9092
+  template:
+        default-topic: notificationTopic
+  consumer:
+        group-id: notificationId
+  producer:
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring.json.type.mapping: event:controlwalletservice.event.WalletEvent
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
