@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: notificationTopic
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: event:com.project3.userservice.event.UserEvent
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: users
+  application:
+    name: USERS-SERVICE
+eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      service-url:
+            defaultZone: http://localhost:8761/eureka/
+      fetch-registry: true
+      register-with-eureka: true
