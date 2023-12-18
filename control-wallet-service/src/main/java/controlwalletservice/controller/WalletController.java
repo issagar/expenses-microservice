@@ -1,13 +1,13 @@
 package controlwalletservice.controller;
 
 import controlwalletservice.dto.Wallet;
-import controlwalletservice.model.ExpensesResponse;
-import controlwalletservice.model.WalletResponse;
 import controlwalletservice.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -15,10 +15,14 @@ import java.util.UUID;
 public class WalletController {
     @Autowired
     private WalletService walletService;
-
-    @GetMapping("/{userId}")
+    @GetMapping
+    public ResponseEntity<List<Wallet>> listAllWallets(){
+        return walletService.getAllWallets();
+    }
+    @GetMapping("/{userId}/{amount}")
     @ResponseStatus(HttpStatus.OK)
-    public WalletResponse isPositiveBalance(@RequestParam String userId){
-        return walletService.isPositiveBalance(userId);
+    public boolean isPositiveBalance(@PathVariable String userId , @PathVariable double amount){
+        System.out.println("userId: " + userId + " amount: " + amount);
+        return walletService.isPositiveBalance(userId, amount);
     }
 }
