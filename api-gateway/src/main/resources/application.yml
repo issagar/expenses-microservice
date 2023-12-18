@@ -5,7 +5,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/realms/spring-boot-microservices-realm
+          issuer-uri: http://localhost:8080/realms/spring-boot-microservices-realm
   application:
     name: API-GATEWAY
   cloud:
@@ -25,6 +25,20 @@ spring:
           uri: lb://CONTROL-WALLET-SERVICE
           predicates:
             - Path=/api/wallet/**
+
+        - id: REGISTRY-SERVICE
+          uri: http://localhost:8761
+          predicates:
+                - Path=/eureka/web
+          filters:
+            - SetPath=/
+
+        - id: REGISTRY-SERVICE-STATIC
+          uri: http://localhost:8761
+          predicates:
+                - Path=/eureka/**
+
+
 
 logging:
   level:

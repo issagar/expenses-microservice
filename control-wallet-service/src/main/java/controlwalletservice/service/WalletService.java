@@ -36,24 +36,23 @@ public class WalletService {
                 .build();
     }
 
-    public Wallet create(Wallet wallet) {
+    public Wallet update(Wallet wallet) {
         ExpensesResponse expensesResponse = restTemplate.getForObject("http://localhost:8081/expenses/wallet/"+wallet.getUserId(), ExpensesResponse.class);
         wallet = walletRepository.findByUserId(expensesResponse.getUserId());
         if (wallet != null){
             wallet.setTotalAmout(expensesResponse.getCurrentBalance());
-
-        }else{
-            wallet = Wallet.builder()
-                    .id(wallet.getId())
-                    .userId(wallet.getUserId())
-                    .totalAmout(expensesResponse.getCurrentBalance())
-                    .build();
         }
         return walletRepository.save(wallet);
     }
 
     @KafkaListener(topics = "notificationTopic" , groupId = "notificationId")
     public void handleNotificationUser(UserEvent userEvent){
-        log.info("Notificacion recibida: " + userEvent.getUserId());
+        log.info("New user created: " + userEvent.getUserId());
+        log.info("Creating wallet for user: " + userEvent.getUserId());
+        Wallet wallet = Wallet.builder()
+                .userId(userEvent.getUserId())
+                .totalAmout(0)
+                .build();
+        walletRepository.save(wallet);
     }
 }

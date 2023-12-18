@@ -5,6 +5,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017
+
       database: expenses
   application:
     name: EXPENSES-SERVICE

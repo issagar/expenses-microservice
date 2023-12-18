@@ -21,19 +21,4 @@ public class WalletController {
     public WalletResponse isPositiveBalance(@RequestParam String userId){
         return walletService.isPositiveBalance(userId);
     }
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Wallet createWallet(@RequestBody ExpensesResponse expensesResponse) {
-        String id = UUID.randomUUID().toString();
-        Wallet wallet = Wallet.builder()
-                .id(id)
-                .userId(expensesResponse.getUserId())
-                .totalAmout(expensesResponse.getCurrentBalance())
-                .build();
-        return walletService.create(wallet);
-
-    }
-
-
-
 }
